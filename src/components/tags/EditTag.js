@@ -14,7 +14,7 @@ export const EditTag = () => {
     const history = useHistory()
 
     useEffect( () => {
-        fetch(`http://localhost:8088/tags/${tagId}`)
+        fetch(`http://localhost:8000/tags/${tagId}`)
             .then(res => res.json())
             .then((data) => {setTag(data)})
     },[]

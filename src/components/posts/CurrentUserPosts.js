@@ -12,7 +12,7 @@ export const CurrentUserPosts = () => {
   }, []);
 
   const fetchCurrentUSerPosts = () => {
-    return fetch(`http://localhost:8088/posts?user_id=${currentUser}`).then(
+    return fetch(`http://localhost:8000/posts?user_id=${currentUser}`).then(
       (response) => response.json()
     );
   };

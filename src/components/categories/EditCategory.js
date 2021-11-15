@@ -14,7 +14,7 @@ export const EditCategory = () => {
     const history = useHistory()
 
     useEffect( () => {
-        fetch(`http://localhost:8088/categories/${categoryId}`)
+        fetch(`http://localhost:8000/categories/${categoryId}`)
             .then(res => res.json())
             .then((data) => {setCategory(data)})
     },[]
