@@ -6,6 +6,7 @@ import "./Auth.css";
 export const Register = (props) => {
   const firstName = useRef();
   const lastName = useRef();
+  const username = useRef();
   const email = useRef();
   const bio = useRef();
   const password = useRef();
@@ -21,11 +22,12 @@ export const Register = (props) => {
         first_name: firstName.current.value,
         last_name: lastName.current.value,
         email: email.current.value,
+        username: username.current.value,
         bio: "",
-        username: email.current.value,
+        username: username.current.value,
         password: password.current.value,
         profile_image_url: "",
-        created_on: Date.now(),
+        created_on: "",
         active: 1,
       };
 
@@ -33,14 +35,14 @@ export const Register = (props) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
+          "Accept": "application/json",
         },
         body: JSON.stringify(newUser),
       })
         .then((res) => res.json())
-        .then((createdUser) => {
-          if (createdUser.hasOwnProperty("id")) {
-            localStorage.setItem("rare_user_id", createdUser.id);
+        .then(res => {
+          if ("token" in res) {
+            localStorage.setItem("rare_user_token", res.token);
             history.push("/");
           }
         });
@@ -83,6 +85,17 @@ export const Register = (props) => {
             name="lastName"
             className="form-control"
             placeholder="Last name"
+            required
+          />
+        </fieldset>
+        <fieldset>
+          <label htmlFor="username"> Username </label>
+          <input
+            ref={username}
+            type="text"
+            name="username"
+            className="form-control"
+            placeholder="username"
             required
           />
         </fieldset>
