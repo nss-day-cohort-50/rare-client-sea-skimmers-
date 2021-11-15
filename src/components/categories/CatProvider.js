@@ -10,7 +10,7 @@ export const CategoryProvider = (props) => {
     const history = useHistory()
 
     const getCategories = () => {
-        return fetch(`http://localhost:8088/categories`)
+        return fetch(`http://localhost:8000/categories`)
         .then(res => res.json())
         .then((data) => setCategories(data))
     }
@@ -29,7 +29,7 @@ export const CategoryProvider = (props) => {
             body: JSON.stringify(categoryData)
         }
 
-        return fetch(`http://localhost:8088`, fetchOption)
+        return fetch(`http://localhost:8000`, fetchOption)
     }
 
     const editCategory = (categoryId, label) => {
@@ -44,13 +44,13 @@ export const CategoryProvider = (props) => {
             })
         }
 
-        return fetch(`http://localhost:8088/categories/${categoryId}`, fetchOption)
+        return fetch(`http://localhost:8000/categories/${categoryId}`, fetchOption)
             .then(() => { history.push("/categories") })
     }
 
     const deleteCategory = (id) => {
 
-        return fetch(`http://localhost:8088/categories/${id}`, {
+        return fetch(`http://localhost:8000/categories/${id}`, {
             method: "DELETE"
         })
         .then(getCategories)

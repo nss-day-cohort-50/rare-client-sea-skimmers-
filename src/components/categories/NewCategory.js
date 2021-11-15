@@ -26,7 +26,7 @@ export const CategoryForm = () => {
             body: JSON.stringify(categoryData)
         }
 
-        return fetch(`http://localhost:8088/categories`, fetchOption)
+        return fetch(`http://localhost:8000/categories`, fetchOption)
             .then(() => {
                 getCategories()
             })

@@ -45,7 +45,7 @@ export const CreatePost = () => {
             body: JSON.stringify(postData)
         }
 
-        return fetch(`http://localhost:8088/posts`, fetchOption)
+        return fetch(`http://localhost:8000/posts`, fetchOption)
             .then(() => { history.push("/")})
     }
 

@@ -25,7 +25,7 @@ export const CreateTag = () => {
             body: JSON.stringify(tagData)
         }
 
-        return fetch(`http://localhost:8088/tags`, fetchOption)
+        return fetch(`http://localhost:8000/tags`, fetchOption)
             .then(() => {getTags()})
     }
 

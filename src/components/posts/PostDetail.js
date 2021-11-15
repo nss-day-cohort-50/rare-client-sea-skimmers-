@@ -15,11 +15,11 @@ export const PostDetail = () => {
   }, []);
 
   const fetchPostById = (id) => {
-    return fetch(`http://localhost:8088/posts/${id}`).then((res) => res.json());
+    return fetch(`http://localhost:8000/posts/${id}`).then((res) => res.json());
   };
 
   const fetchPostTags = (postId) => {
-    return fetch(`http://localhost:8088/postTags/${postId}`).then((res) =>
+    return fetch(`http://localhost:8000/postTags/${postId}`).then((res) =>
       res.json()
     );
   };

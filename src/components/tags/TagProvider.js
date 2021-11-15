@@ -10,7 +10,7 @@ export const TagsProvider = (props) => {
     const history = useHistory()
 
     const getTags = () => {
-        return fetch(`http://localhost:8088/tags`)
+        return fetch(`http://localhost:8000/tags`)
         .then(res => res.json())
         .then(setTags)
     }
@@ -29,7 +29,7 @@ export const TagsProvider = (props) => {
             body: JSON.stringify(tagData)
         }
 
-        return fetch(`http://localhost:8088`, fetchOption)
+        return fetch(`http://localhost:8000`, fetchOption)
     }
 
     const editTag = (tagId, label) => {
@@ -44,13 +44,13 @@ export const TagsProvider = (props) => {
             })
         }
 
-        return fetch(`http://localhost:8088/tags/${tagId}`, fetchOption)
+        return fetch(`http://localhost:8000/tags/${tagId}`, fetchOption)
             .then(() => { history.push("/tags") })
     }
 
     const deleteTag = (id) => {
 
-        return fetch(`http://localhost:8088/tags/${id}`, {
+        return fetch(`http://localhost:8000/tags/${id}`, {
             method: "DELETE"
         })
         .then(getTags)

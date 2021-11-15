@@ -11,7 +11,7 @@ export const PostList = () => {
   }, []);
 
   const fetchAllPosts = () => {
-    return fetch(`http://localhost:8088/posts`).then((response) =>
+    return fetch(`http://localhost:8000/posts`).then((response) =>
       response.json()
     );
   };
