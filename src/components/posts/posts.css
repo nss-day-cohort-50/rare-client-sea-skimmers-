@@ -1,0 +1,45 @@
+.post_container {
+  display: flex;
+  border: 3px black solid;
+  margin: 1rem 0 1rem 0;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+.center {
+  display: flex;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 1rem;
+  justify-content: center;
+}
+.bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post_list {
+}
+
+table,
+th,
+td {
+  border: 1px black solid;
+}
+
+.detail_main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.detail_container {
+  flex: 1 1 70%;
+}
+
+.detail_tags {
+  flex: 1 1 30%;
+}

@@ -1,0 +1,31 @@
+article.category_manager {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+section.new_category {
+    border: solid black;
+    border-radius: 15%;
+    padding: 2rem;
+}
+
+div.newCategory_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+section.edit_category {
+    width: 350px;
+    border: solid black;
+    border-radius: 15%;
+    padding: 2rem;
+}
+
+div.editCategory_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
