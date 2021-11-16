@@ -4,7 +4,7 @@ import "./posts.css";
 
 export const PostList = () => {
   const [posts, setPosts] = useState([]);
-  const currentUser = parseInt(localStorage.getItem("rare_user_id"));
+  const currentUser = parseInt(localStorage.getItem("rare_user_token"));
 
   useEffect(() => {
     fetchAllPosts().then((data) => setPosts(data));

@@ -7,7 +7,7 @@ export const PostDetail = () => {
   const [post, setPost] = useState({});
   const [tags, setTags] = useState([]);
   const { postId } = useParams();
-  const currentUser = parseInt(localStorage.getItem("rare_user_id"));
+  const currentUser = parseInt(localStorage.getItem("rare_user_token"));
 
   useEffect(() => {
     fetchPostById(postId).then((data) => setPost(data));

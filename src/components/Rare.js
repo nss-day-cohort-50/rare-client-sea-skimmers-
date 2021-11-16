@@ -12,7 +12,7 @@ export const Rare = () => (
         <TagsProvider>
         <CategoryProvider>
             <Route render={() => {
-                if (localStorage.getItem("rare_user_id")) {
+                if (localStorage.getItem("rare_user_token")) {
                     return <>
                         <NavBar />
                         <ApplicationViews />
@@ -25,7 +25,7 @@ export const Rare = () => (
         </TagsProvider>
         
         <Route path="/login" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_user_token")) {
                 return <Redirect to="/" />
             } else {
                 return <Login />
@@ -33,7 +33,7 @@ export const Rare = () => (
         }} />
 
         <Route path="/register" render={() => {
-            if (localStorage.getItem("rare_user_id")) {
+            if (localStorage.getItem("rare_user_token")) {
                 return <Redirect to="/" />
             } else {
                 return <Register />
