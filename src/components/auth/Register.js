@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { HumanDate } from "../utils/HumanDate";
 import "./Auth.css";
@@ -9,10 +9,24 @@ export const Register = (props) => {
   const username = useRef();
   const email = useRef();
   const bio = useRef();
+  const [ isAdmin, setAdmin ] = useState(false)
   const password = useRef();
   const verifyPassword = useRef();
   const passwordDialog = useRef();
   const history = useHistory();
+
+  useEffect(() => {
+    console.log('isadmin:', isAdmin)
+    
+  }, [isAdmin]);
+
+  const handleAdminCheckbox = () => {
+    if(isAdmin) {
+        setAdmin(false)
+    }else{
+        setAdmin(true)
+    }
+}
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -28,6 +42,7 @@ export const Register = (props) => {
         password: password.current.value,
         profile_image_url: "",
         created_on: "",
+        is_staff: isAdmin,
         active: 1,
       };
 
@@ -127,6 +142,19 @@ export const Register = (props) => {
             ref={verifyPassword}
             type="password"
             name="verifyPassword"
+            className="form-control"
+            placeholder="Verify password"
+            required
+          />
+        </fieldset>
+        <fieldset>
+          <label htmlFor="verifyPassword"> "Are you an administrator?" </label>
+          <input
+            onChange={() => {
+              handleAdminCheckbox()
+            }}
+            type="checkbox"
+            name="isAdmin"
             className="form-control"
             placeholder="Verify password"
             required
