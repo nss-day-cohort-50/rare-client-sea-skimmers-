@@ -4,7 +4,7 @@ import "./posts.css";
 
 export const CurrentUserPosts = () => {
   const [userPosts, setUserPosts] = useState([]);
-  const currentUser = parseInt(localStorage.getItem("rare_user_id"));
+  const currentUser = parseInt(localStorage.getItem("rare_user_token"));
   const history = useHistory()
 
   useEffect(() => {

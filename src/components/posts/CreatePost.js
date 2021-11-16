@@ -16,7 +16,7 @@ export const CreatePost = () => {
         approved: 1
     })
     const history = useHistory()
-    const currentUser = localStorage.getItem("rare_user_id")
+    const currentUser = localStorage.getItem("rare_user_token")
     const { categories, getCategories } = useContext(CategoryContext)
     const { tags, getTags } = useContext(TagsContext)
 

@@ -31,12 +31,12 @@ export const NavBar = () => {
           Tag Manager
         </Link>
       </li>
-      {localStorage.getItem("rare_user_id") !== null ? (
+      {localStorage.getItem("rare_user_token") !== null ? (
         <li className="nav-item">
           <button
             className="nav-link fakeLink"
             onClick={() => {
-              localStorage.removeItem("rare_user_id");
+              localStorage.removeItem("rare_user_token");
               history.push({ pathname: "/" });
             }}
           >
