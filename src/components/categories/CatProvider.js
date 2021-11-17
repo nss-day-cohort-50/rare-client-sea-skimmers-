@@ -10,7 +10,9 @@ export const CategoryProvider = (props) => {
     const history = useHistory()
 
     const getCategories = () => {
-        return fetch(`http://localhost:8000/categories`)
+        return fetch(`http://localhost:8000/categories`,{
+            headers: {"Authorization": `Token ${localStorage.getItem("rare_user_token")}`}
+        })
         .then(res => res.json())
         .then((data) => setCategories(data))
     }
@@ -30,7 +32,7 @@ export const CategoryProvider = (props) => {
             body: JSON.stringify(categoryData)
         }
 
-        return fetch(`http://localhost:8000`, fetchOption)
+        return fetch("http://localhost:8000/categories", fetchOption)
     }
 
     const editCategory = (categoryId, label) => {
