@@ -3,6 +3,7 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { getPostById } from "./PostManager";
 import Swal from "sweetalert2";
 import "./posts.css";
+import { deleteComment } from "../comment/CommentManager";
 
 export const PostDetail = () => {
   const [ post, setPost ] = useState({});
@@ -10,9 +11,12 @@ export const PostDetail = () => {
   const { postId } = useParams();
   const history = useHistory()
 
+const renderPost = () => {
+  getPostById(postId).then((data) => setPost(data));
+}
 
   useEffect(() => {
-    getPostById(postId).then((data) => setPost(data));
+    renderPost()
   }, []);
 
   useEffect(() => {
@@ -27,6 +31,10 @@ const handleShowComments = () => {
     setShowComments(true)
     }
   }
+
+const handleDelete = (commentId) => {
+  deleteComment(commentId).then(renderPost)
+}
 
   return (
       <div className='main'>
@@ -70,7 +78,12 @@ const handleShowComments = () => {
                     post?.comments?.map(comment => 
                     <> <p> {comment?.content}</p>
                     <Link
-                    to={`/comments/edit/${comment.id}/${postId}`}>edit</Link> </>)
+                    to={`/comments/edit/${comment.id}/${postId}`}>edit</Link> <br></br>
+                    <Link to={`/postDetail/${postId}`}
+                    onClick={()=> {handleDelete(comment.id)
+                    }}>delete comment</Link> 
+                    </>
+                    )
                     : ""
                   }
                   </div>

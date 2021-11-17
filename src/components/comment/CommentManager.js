@@ -9,12 +9,12 @@
 
 export const getComment = (commentId) => {
     return fetch(`http://localhost:8000/comments/${commentId}`, {
-      headers: {
-        "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
-      }
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
+        }
     })
-      .then(response => response.json())
-  }
+        .then(response => response.json())
+}
 
 export const addComment = comment => {
     return fetch("http://localhost:8000/comments", {
@@ -29,13 +29,21 @@ export const addComment = comment => {
 
 export const updateCommentFetch = (comment) => {
     return fetch(`http://localhost:8000/comments/${comment.id}`, {
-      method: "PUT",
-      headers: {
-        "Authorization": `Token ${localStorage.getItem("rare_user_token")}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(comment)
-     })
-        
-  }
-  
+        method: "PUT",
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("rare_user_token")}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(comment)
+    })
+
+}
+
+export const deleteComment = (commentId) => {
+    return fetch(`http://localhost:8000/comments/${ commentId }`, {
+        method: "DELETE",
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
+        }
+    })
+}
