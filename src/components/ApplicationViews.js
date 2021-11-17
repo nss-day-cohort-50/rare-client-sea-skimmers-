@@ -19,7 +19,10 @@ export const ApplicationViews = () => {
           lineHeight: "1.75rem",
         }}
       >
-        <Route exact path="/comments/create">
+        <Route exact path="/comments/create/:postId(\d+)">
+          <CommentForm />
+        </Route>
+        <Route exact path="/comments/edit/:commentId(\d+)/:postId(\d+)">
           <CommentForm />
         </Route>
         <Route exact path="/myPosts">

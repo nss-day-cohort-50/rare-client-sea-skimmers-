@@ -1,30 +1,35 @@
 import React, { useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router-dom"
-import { getCommentId, addComment  } from "./CommentManager"
+import { getComment, addComment, updateCommentFetch  } from "./CommentManager"
 
-export const CommentForm = ({ commentPostId }) => {
+export const CommentForm = () => {
     const [comment, setCommentState] = useState({})
     const history = useHistory()
-    const { commentId } = useParams()
+    const { commentId, postId } = useParams()
+    
     useEffect(() => {
         console.log('comment', comment)
-    }, [comment]);
+        console.log('commentId', commentId)
+        console.log('postId', postId)
 
-    const handleOnChange = (event) => {
-        const copyComment = { ...comment }
-        copyComment['postId'] = commentPostId
-        copyComment[event.target.name] = event.target.value
-        setCommentState(copyComment)
-    }
+    }, [comment, commentId]);
 
     useEffect(() => {
         if (commentId) {
-            getCommentId(commentId).then((commentData) => setCommentState({
+            getComment(commentId).then((commentData) => setCommentState({
             ...commentData,
             content: commentData.content,
             }))
         }
     }, [commentId])
+
+    const handleOnChange = (event) => {
+        const copyComment = { ...comment }
+        copyComment['postId'] = postId
+        copyComment[event.target.name] = event.target.value
+        setCommentState(copyComment)
+    }
+
 
     const saveComment = (event) => {
         event.preventDefault()
@@ -34,13 +39,13 @@ export const CommentForm = ({ commentPostId }) => {
         })
     }
 
-    // const updatecomment = (event) => {
-    //     event.preventDefault()
-    //     if(comment.)
-    //     updatecommentFetch(comment).then(() => {
-    //         history.push('/comments')
-    //     })
-    // }
+    const updateComment = (event) => {
+        event.preventDefault()
+
+        updateCommentFetch(comment).then(() => {
+            history.push('/postList')
+        })
+    }
 
     return (
         <form>
@@ -51,12 +56,12 @@ export const CommentForm = ({ commentPostId }) => {
             <div>
                 <button onClick={(event) => {
                     if (commentId) {
-                        // updatecomment(event)
+                        updateComment(event)
                     } else {
                         saveComment(event)
                     }}
                 }>Save comment</button>
-            </div>
+        </div>
         </form>
     )
 }

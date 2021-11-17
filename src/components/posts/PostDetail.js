@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { getPostById, getPostTags } from "./PostManager";
-import { CommentForm } from "../comment/CommentForm";
+import { getPostById } from "./PostManager";
 import Swal from "sweetalert2";
 import "./posts.css";
 
 export const PostDetail = () => {
   const [ post, setPost ] = useState({});
   const [ showComments, setShowComments ] = useState(false)
-  const [ showCommentForm, setShowCommentForm ] = useState(false)
-  //const [tags, setTags] = useState([])
   const { postId } = useParams();
   const history = useHistory()
 
@@ -20,9 +17,6 @@ export const PostDetail = () => {
 
   useEffect(() => {
     console.log('post', post)
-    console.log('showcomments', showComments)
-    console.log('commentFoirm', showCommentForm)
-
   }, [post, showComments]);
 
 
@@ -33,24 +27,8 @@ const handleShowComments = () => {
     setShowComments(true)
     }
   }
-const handleShowCommentForm = () => {
-  if(showCommentForm) {
-    setShowCommentForm(false)
-  }else{
-    setShowCommentForm(true)
-    }
-  }
-
-const commentFormJSX =
-  <div>
-    <CommentForm commentPostId={postId}/>
-  </div>
 
   return (
-    <>
-    {showCommentForm ? commentFormJSX
-    :
-
       <div className='main'>
           <div className="detail_container">
               <div className="detail_header">
@@ -71,7 +49,7 @@ const commentFormJSX =
           </div>
           <div className="detail_comments">
             <button onClick={() => {
-              handleShowCommentForm()
+              history.push(`/comments/create/${postId}`)
             }}>Add Comment</button>
             {showComments ?
               <button 
@@ -89,13 +67,14 @@ const commentFormJSX =
                 
                   <div>
                   {showComments ?
-                    post?.comments?.map(comment => <p> {comment?.content}</p>)
+                    post?.comments?.map(comment => 
+                    <> <p> {comment?.content}</p>
+                    <Link
+                    to={`/comments/edit/${comment.id}/${postId}`}>edit</Link> </>)
                     : ""
                   }
                   </div>
           </div>
       </div>
-    }
-    </>
   )
 }
