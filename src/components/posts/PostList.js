@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { getPosts } from "./PostManager";
 import "./posts.css";
 
 export const PostList = () => {
@@ -7,14 +8,12 @@ export const PostList = () => {
   const currentUser = parseInt(localStorage.getItem("rare_user_token"));
 
   useEffect(() => {
-    fetchAllPosts().then((data) => setPosts(data));
+    getPosts().then((data) => setPosts(data));
   }, []);
 
-  const fetchAllPosts = () => {
-    return fetch(`http://localhost:8000/posts`).then((response) =>
-      response.json()
-    );
-  };
+  useEffect(() => {
+    console.log('posts', posts)
+  }, [posts]);
 
   return (
     <>
@@ -32,13 +31,13 @@ export const PostList = () => {
               <td>
                 <Link to={`/postDetail/${post.id}`}>{post?.title}</Link>
               </td>
-              <td>{`${post?.user.first_name} ${post?.user.last_name}`}</td>
+              <td>{`${post?.author?.user?.first_name} ${post?.author?.user?.last_name}`}</td>
               <td>{post?.publication_date}</td>
               <td>{post?.category.label}</td>
               <td>post tags here</td>
             </tr>
           );
-        })}
+        })}L
       </table>
     </>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { getPostById, getPostTags } from "./PostManager";
 import Swal from "sweetalert2";
 import "./posts.css";
 
@@ -10,19 +11,15 @@ export const PostDetail = () => {
   const currentUser = parseInt(localStorage.getItem("rare_user_token"));
 
   useEffect(() => {
-    fetchPostById(postId).then((data) => setPost(data));
-    fetchPostTags(postId).then((data) => setTags(data));
+    getPostById(postId).then((data) => setPost(data));
+    getPostTags(postId).then((data) => setTags(data));
   }, []);
 
-  const fetchPostById = (id) => {
-    return fetch(`http://localhost:8000/posts/${id}`).then((res) => res.json());
-  };
+  useEffect(() => {
+    console.log('post', post)
+    console.log('tags', tags)
+  }, [post, tags]);
 
-  const fetchPostTags = (postId) => {
-    return fetch(`http://localhost:8000/postTags/${postId}`).then((res) =>
-      res.json()
-    );
-  };
 
   return (
     <>
@@ -36,7 +33,6 @@ export const PostDetail = () => {
               <div className="header_title">
                 <h1>{post.title}</h1>
               </div>
-              <div className="header_category">{post?.category?.label}</div>
             </div>
           ) : (
             <div className="detail_header">
@@ -46,18 +42,20 @@ export const PostDetail = () => {
               <div className="header_category">{post?.category?.label}</div>
             </div>
           )}
-          <div className="detail_img">{post.image_url}</div>
+          <div className="detail_img">
+          <img src={post.image_url} width='500' height='300'/>
+          </div>
+          <div className="detail_content">{post.content}</div>
           <div className="detail_acr">
             <div className="detail_author">
-              {`By ${post?.user?.first_name} ${post?.user?.last_name}`}
+              {`By ${post?.author?.user?.first_name} ${post?.author?.user?.last_name}`}
             </div>
+          </div>
+        </div>
             <div className="detail_comments">
               <button>View Comments</button>
             </div>
             <div className="detail_reactions">post reactions here</div>
-          </div>
-          <div className="detail_content">{post.content}</div>
-        </div>
         <div className="detail_tags">
           {/* {tags.map((tag) => {
             return <p>{tag?.tag.label}</p>;
