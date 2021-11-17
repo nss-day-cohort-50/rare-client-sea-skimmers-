@@ -10,7 +10,9 @@ export const TagsProvider = (props) => {
     const history = useHistory()
 
     const getTags = () => {
-        return fetch(`http://localhost:8000/tags`)
+        return fetch(`http://localhost:8000/tags`,{
+            headers: {"Authorization": `Token ${localStorage.getItem("rare_user_token")}`}
+        })
         .then(res => res.json())
         .then(setTags)
     }
@@ -24,6 +26,7 @@ export const TagsProvider = (props) => {
         const fetchOption = {
             method: "POST",
             headers: {
+                "Authorization": `Token ${localStorage.getItem("rare_user_token")}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(tagData)
@@ -35,8 +38,9 @@ export const TagsProvider = (props) => {
     const editTag = (tagId, label) => {
 
         const fetchOption = {
-            method: "PATCH",
+            method: "PUT",
             headers: {
+                "Authorization": `Token ${localStorage.getItem("rare_user_token")}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -51,7 +55,10 @@ export const TagsProvider = (props) => {
     const deleteTag = (id) => {
 
         return fetch(`http://localhost:8000/tags/${id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
+            }
         })
         .then(getTags)
 
