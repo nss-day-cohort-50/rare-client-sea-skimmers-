@@ -6,15 +6,24 @@ export const PostList = () => {
   const [posts, setPosts] = useState([]);
   const currentUser = parseInt(localStorage.getItem("rare_user_token"));
 
-  useEffect(() => {
-    fetchAllPosts().then((data) => setPosts(data));
-  }, []);
-
   const fetchAllPosts = () => {
-    return fetch(`http://localhost:8000/posts`).then((response) =>
-      response.json()
-    );
+    return fetch(`http://localhost:8000/posts`, {
+      headers:{
+        "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
+      }
+    })
+      .then(response => response.json())
+      .then((data) => {
+        setPosts(data)
+      })
   };
+
+  useEffect(
+    () => {
+        fetchAllPosts()
+    },
+    []
+)
 
   return (
     <>
