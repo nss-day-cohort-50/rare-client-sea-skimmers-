@@ -21,6 +21,7 @@ export const CategoryForm = () => {
         const fetchOption = {
             method: "POST",
             headers: {
+                "Authorization": `Token ${localStorage.getItem("rare_user_token")}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(categoryData)
