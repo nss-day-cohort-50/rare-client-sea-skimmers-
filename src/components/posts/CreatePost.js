@@ -5,17 +5,117 @@ import { TagsContext } from "../tags/TagProvider"
 import { HumanDate } from "../utils/HumanDate"
 import "./posts.css"
 
+export const PostForm = () => {
+    const history = useHistory()
+    const [categories, setCategories] = useState([])
 
+    const [currentPost, setCurrentPost] = useState({
+        category: 0,
+        title: "",
+        publication_date: "2021-11-",
+        image_url: "",
+        content: "",
+        approved: 1
+    })
+
+    useEffect(() => {
+        getCategories()
+        .then(data => setCategories(data))
+    },
+    [])
+
+    const changePostState = (event) => {
+        const newPostState = { ...currentPost }
+            newPostState[event.target.name] = event.target.value
+            setCurrentPost(newPostState)
+    }
+
+    return (
+        <>
+                <div className="newPost_form">
+                <h2>New Post</h2>
+                    <form className="newPost">
+                        <fieldset className="newPost_title">
+                            <div className="form-group">
+                                <input type="text" name="title" required autoFocus className="form-control"
+                                value={currentPost.title}
+                                onChange={changePostState}
+                                />
+                            </div>
+                        </fieldset>
+                        <fieldset className="newPost_image">
+                            <div className="form-group">
+                                <input
+                                    onChange = {
+                                        (evt) => {
+                                            const copy = {...post}
+                                            copy.image_url = evt.target.value
+                                            updatePost(copy)
+                                        }
+                                    }
+                                    required autoFocus
+                                    type="textarea"
+                                    className="form-control"
+                                    placeholder="Image URL"
+                                />
+                            </div>
+                        </fieldset>
+                        <fieldset className="newPost_content">
+                            <div className="form-group">
+                                <input
+                                    onChange = {
+                                        (evt) => {
+                                            const copy = {...post}
+                                            copy.content = evt.target.value
+                                            updatePost(copy)
+                                        }
+                                    }
+                                    required autoFocus
+                                    type="textarea"
+                                    className="form-control"
+                                    placeholder="Article Content"
+                                />
+                            </div>
+                        </fieldset>
+                        <fieldset className="newPost_category">
+                                
+                                <select name="categories" id="categories" 
+                                    onChange = { (evt) => {
+                                        const copy = {...post}
+                                        copy.category_id = evt.target.value
+                                        updatePost(copy)
+                                    }
+                                }>
+                                    <option value={0} selected>Category Select</option>
+                                    {
+                                        categories.map((category) => {
+                                            return <option value={category.id}>{category.label}</option>
+                                        })
+                                    }
+                                </select>
+
+                        </fieldset>
+                        <fieldset className="newPost_tag">
+                                    <p>tag checkboxes placeholder</p>
+                        </fieldset>
+                        <button className="newPost" onClick={savePost}>
+                            Publish
+                        </button>
+                    </form>
+                </div>
+        </>
+    )
+}
 
 export const CreatePost = () => {
+    const history = useHistory()
     const [post, updatePost] = useState({
-        category_id: 0,
+        category: 0,
         title: "",
         image_url: "",
         content: "",
         approved: 1
     })
-    const history = useHistory()
     const { categories, getCategories } = useContext(CategoryContext)
     const { tags, getTags } = useContext(TagsContext)
 
