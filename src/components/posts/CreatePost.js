@@ -62,7 +62,15 @@ export const PostForm = () => {
                         </div>
                     </fieldset>
                     <fieldset className="newPost_category">
-
+                    <fieldset>
+                        <label htmlFor="content">Content: </label>
+                        <div className="form-group">
+                            <input type="text" name="content" required autoFocus className="form-control"
+                                value={currentPost.content}
+                                onChange={changePostState}
+                            />
+                        </div>
+                    </fieldset>
                         <div className="form-group">
                             <label htmlFor="categoryId">Category: </label>
                             <select name="category"
