@@ -44,6 +44,7 @@ export const CurrentUserPosts = () => {
                 <div className="detail_img">
                   <img alt="Post picture" src={post?.image_url} />
                 </div>
+                <div>{post?.content}</div>
               </div>
               <div className="bottom">
                 {post.category.label}
