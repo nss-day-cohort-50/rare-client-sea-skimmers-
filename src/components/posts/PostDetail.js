@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { getPostById } from "./PostManager";
+import { getPostById, fetchCurrentUser, approvePost } from "./PostManager";
 import Swal from "sweetalert2";
 import "./posts.css";
 import { deleteComment } from "../comment/CommentManager";
@@ -8,22 +8,28 @@ import { deleteComment } from "../comment/CommentManager";
 export const PostDetail = () => {
   const [ post, setPost ] = useState({});
   const [ showComments, setShowComments ] = useState(false)
-  const [ showApprovedPosts, setShowApprovedPosts ] = useState()
+  const [ currentUser, setCurrentUser ] = useState({})
   const { postId } = useParams();
   const history = useHistory()
 
 const renderPost = () => {
-  getPostById(postId).then((data) => setPost(data));
+  getPostById(postId).then((data) => setPost(data))
+}
+
+const getCurrentUser = () => {
+  fetchCurrentUser().then(data => setCurrentUser(data))
+
 }
 
   useEffect(() => {
     renderPost()
+    getCurrentUser()
   }, []);
 
   useEffect(() => {
     console.log('post', post)
     console.log('postapprove', post.approved)
-    handleShowApprovedPosts()
+    console.log('curUser', currentUser)
 
   }, [post, showComments]);
 
@@ -36,9 +42,6 @@ const handleShowComments = () => {
     }
   }
 
-const handleShowApprovedPosts = () => {
-  setShowApprovedPosts(true)
-  }
 
 const handleDelete = (commentId) => {
   deleteComment(commentId).then(renderPost)
@@ -46,14 +49,16 @@ const handleDelete = (commentId) => {
 
   return (
     <>
-    {post.approved ?
+    {currentUser?.user?.is_staff ?
+      <button onClick={() => approvePost(post.id)}
+      >Approve Post</button>
+      : ""
+    }
+    {post.approved || currentUser?.user?.is_staff ?
     
       <div className='main'>
       <div className="detail_container">
           <div className="detail_header">
-            <div className="header_user">
-              Delete <Link>Edit</Link>
-            </div>
             <div className="header_title">
               <h1>{post.title}</h1>
             </div>

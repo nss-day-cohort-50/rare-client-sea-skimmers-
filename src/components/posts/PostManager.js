@@ -1,15 +1,15 @@
 export const getPosts = () => {
     return fetch("http://localhost:8000/posts", {
-        headers:{
+        headers: {
             "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
         }
     })
-    .then(response => response.json())
+        .then(response => response.json())
 }
 
 export const getPostById = (postId) => {
-    return fetch(`http://localhost:8000/posts/${ postId }`, {
-        headers:{
+    return fetch(`http://localhost:8000/posts/${postId}`, {
+        headers: {
             "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
         }
     })
@@ -17,8 +17,8 @@ export const getPostById = (postId) => {
 }
 
 export const getPostTags = (postId) => {
-    return fetch(`http://localhost:8000/postTags/${ postId }`, {
-        headers:{
+    return fetch(`http://localhost:8000/postTags/${postId}`, {
+        headers: {
             "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
         }
     })
@@ -26,9 +26,9 @@ export const getPostTags = (postId) => {
 }
 
 export const createPost = (post) => {
-    return fetch("http://localhost:8000/posts", { 
+    return fetch("http://localhost:8000/posts", {
         method: "POST",
-        headers:{
+        headers: {
             "Authorization": `Token ${localStorage.getItem("rare_user_token")}`,
             "Content-Type": "application/json"
         },
@@ -38,9 +38,9 @@ export const createPost = (post) => {
 
 
 export const deletePost = (postId) => {
-    return fetch(`http://localhost:8000/posts/${ postId }`, {
+    return fetch(`http://localhost:8000/posts/${postId}`, {
         method: "DELETE",
-        headers:{
+        headers: {
             "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
         }
     })
@@ -58,9 +58,18 @@ export const updatePost = post => {
 }
 
 export const approvePost = postId => {
-    return fetch(`http://localhost:8000/events/${ postId }/approve`, {
-        method: "POST",
-        headers:{
+    return fetch(`http://localhost:8000/posts/${postId}/approve`, {
+        method: "PATCH",
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
+        }
+    })
+        .then(response => response.json())
+}
+
+export const fetchCurrentUser = () => {
+    return fetch(`http://localhost:8000/authors/currentuser`, {
+        headers: {
             "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
         }
     })
