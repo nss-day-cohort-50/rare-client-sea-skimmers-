@@ -48,7 +48,7 @@ export const PostList = () => {
               <td>post tags here</td>
             </tr>
           );
-        })}L
+        })}
       </table>
     </>
   );

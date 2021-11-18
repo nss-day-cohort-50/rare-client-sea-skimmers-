@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import "./posts.css";
+import { deletePost } from "./PostManager";
 
 export const CurrentUserPosts = () => {
   const [userPosts, setUserPosts] = useState([]);
@@ -45,12 +46,16 @@ export const CurrentUserPosts = () => {
                 </div>
               </div>
               <div className="bottom">
+                {post.category.label}
                 <div className="post_author">
                   {`Author: ${post?.author?.user?.first_name} ${post?.author?.user?.last_name}`}
                 </div>
                 <div className="post_reaction">
                   <div>
                     Reactions go here. Edit and delete buttons go here.
+                    <button className="btn btn-3"
+                                    onClick={() => deletePost(post.id).then(() => fetchCurrentUserPosts())}
+                                    >Delete</button>
                   </div>
                 </div>
               </div>
