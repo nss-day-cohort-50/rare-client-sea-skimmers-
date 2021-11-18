@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { CommentList } from "./comment/CommentList";
+import { CommentForm } from "./comment/CommentForm";
 import { PostList } from "./posts/PostList";
 import { Category } from "./categories/Category";
 import { CurrentUserPosts } from "./posts/CurrentUserPosts";
@@ -19,8 +19,11 @@ export const ApplicationViews = () => {
           lineHeight: "1.75rem",
         }}
       >
-        <Route exact path="/comments">
-          <CommentList />
+        <Route exact path="/comments/create/:postId(\d+)">
+          <CommentForm />
+        </Route>
+        <Route exact path="/comments/edit/:commentId(\d+)/:postId(\d+)">
+          <CommentForm />
         </Route>
         <Route exact path="/myPosts">
           <CurrentUserPosts />

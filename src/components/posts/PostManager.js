@@ -4,7 +4,7 @@ export const getPosts = () => {
             "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
         }
     })
-        .then(response => response.json())
+    .then(response => response.json())
 }
 
 export const getPostById = (postId) => {
