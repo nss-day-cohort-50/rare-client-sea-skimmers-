@@ -29,8 +29,8 @@ export const createPost = (post) => {
     return fetch("http://localhost:8000/posts", { 
         method: "POST",
         headers:{
-            "Content-Type": "application/json",
-            "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
+            "Authorization": `Token ${localStorage.getItem("rare_user_token")}`,
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(post)
     })
