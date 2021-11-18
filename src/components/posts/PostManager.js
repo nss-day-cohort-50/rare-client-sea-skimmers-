@@ -56,3 +56,14 @@ export const updatePost = post => {
         body: JSON.stringify(post)
     })
 }
+
+export const approvePost = postId => {
+    return fetch(`http://localhost:8000/events/${ postId }/signup`, {
+        method: "POST",
+        headers:{
+            "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
+        }
+    })
+        .then(response => response.json())
+        .then(getEvents)
+}
