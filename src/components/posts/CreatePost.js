@@ -16,7 +16,6 @@ export const CreatePost = () => {
         approved: 1
     })
     const history = useHistory()
-    const currentUser = localStorage.getItem("rare_user_token")
     const { categories, getCategories } = useContext(CategoryContext)
     const { tags, getTags } = useContext(TagsContext)
 
@@ -28,7 +27,6 @@ export const CreatePost = () => {
         event.preventDefault()
 
         const postData = {
-            user_id: currentUser,
             category_id: parseInt(post.category_id),
             title: post.title,
             publication_date: Date.now(),

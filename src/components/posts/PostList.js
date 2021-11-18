@@ -7,13 +7,24 @@ export const PostList = () => {
   const [posts, setPosts] = useState([]);
   const currentUser = parseInt(localStorage.getItem("rare_user_token"));
 
-  useEffect(() => {
-    getPosts().then((data) => setPosts(data));
-  }, []);
+  const fetchAllPosts = () => {
+    return fetch(`http://localhost:8000/posts`, {
+      headers:{
+        "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
+      }
+    })
+      .then(response => response.json())
+      .then((data) => {
+        setPosts(data)
+      })
+  };
 
-  useEffect(() => {
-    console.log('posts', posts)
-  }, [posts]);
+  useEffect(
+    () => {
+        fetchAllPosts()
+    },
+    []
+)
 
   return (
     <>
@@ -37,7 +48,7 @@ export const PostList = () => {
               <td>post tags here</td>
             </tr>
           );
-        })}L
+        })}
       </table>
     </>
   );

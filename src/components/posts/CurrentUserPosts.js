@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import "./posts.css";
+import { deletePost } from "./PostManager";
 
 export const CurrentUserPosts = () => {
   const [userPosts, setUserPosts] = useState([]);
-  const currentUser = parseInt(localStorage.getItem("rare_user_token"));
   const history = useHistory()
 
-  useEffect(() => {
-    fetchCurrentUSerPosts().then((data) => setUserPosts(data));
-  }, []);
 
-  const fetchCurrentUSerPosts = () => {
-    return fetch(`http://localhost:8000/posts?user_id=${currentUser}`).then(
-      (response) => response.json()
-    );
+  const fetchCurrentUserPosts = () => {
+    return fetch(`http://localhost:8000/posts/currentuser`, {
+      headers:{
+        "Authorization": `Token ${localStorage.getItem("rare_user_token")}`
+      }
+    })
+      .then(response => response.json())
+      .then((data) => {
+        setUserPosts(data)
+      })
   };
+
+  useEffect(
+    () => {
+        fetchCurrentUserPosts()
+    },
+    []
+  )
+
   return (
     <>
       <div>
@@ -30,22 +41,22 @@ export const CurrentUserPosts = () => {
                 <div className="post_date">{post?.publication_date}</div>
               </div>
               <div className="center">
-                <div className="post_image">{post?.image_url}</div>
+                <div className="detail_img">
+                  <img alt="Post picture" src={post?.image_url} />
+                </div>
               </div>
               <div className="bottom">
+                {post.category.label}
                 <div className="post_author">
-                  {`Author: ${post?.user?.first_name} ${post?.user?.last_name}`}
+                  {`Author: ${post?.author?.user?.first_name} ${post?.author?.user?.last_name}`}
                 </div>
                 <div className="post_reaction">
-                  {
-                    (post.id = currentUser ? (
-                      <div>
-                        Reactions go here. Edit and delete buttons go here.
-                      </div>
-                    ) : (
-                      <div>Reactions go here.</div>
-                    ))
-                  }
+                  <div>
+                    Reactions go here. Edit and delete buttons go here.
+                    <button className="btn btn-3"
+                                    onClick={() => deletePost(post.id).then(() => fetchCurrentUserPosts())}
+                                    >Delete</button>
+                  </div>
                 </div>
               </div>
             </div>
